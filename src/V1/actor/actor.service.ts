@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ActorEntity } from './actor.entity';
 import { DeleteResult, Like, Repository, UpdateResult } from 'typeorm';
@@ -58,6 +58,10 @@ export class ActorService {
     actor_id: number,
     updateActorDto: UpdateActorDto,
   ): Promise<UpdateResult> {
+    const actor = await this.findById(actor_id);
+    if (!actor) {
+      throw new NotFoundException('Actor not found');
+    }
     return await this.actorRepository.update(actor_id, updateActorDto);
   }
 

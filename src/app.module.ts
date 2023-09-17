@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
-  _imports: [TypeOrmModule.forRoot({
+  imports: [TypeOrmModule.forRoot({
     type: 'mysql',
     host: '0.0.0.0',
     port: 3306,
@@ -25,12 +25,6 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
     ConfigModule.forRoot(),
   ],
-  get imports() {
-    return this._imports;
-  },
-  set imports(value) {
-    this._imports = value;
-  },
   controllers: [AppController],
   providers: [AppService],
 })
