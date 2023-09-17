@@ -9,18 +9,28 @@ import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  _imports: [TypeOrmModule.forRoot({
     type: 'mysql',
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 3306,
     username: 'root',
-    password: 'admin123',
+    password: '123456',
     database: 'test-sakila',
     entities: [ActorEntity],
     // logger: 'advanced-console',
     // logging: 'all',
     synchronize: false,
-  }),ActorModule, AuthModule, ConfigModule.forRoot()],
+    }),
+    ActorModule,
+    AuthModule,
+    ConfigModule.forRoot(),
+  ],
+  get imports() {
+    return this._imports;
+  },
+  set imports(value) {
+    this._imports = value;
+  },
   controllers: [AppController],
   providers: [AppService],
 })

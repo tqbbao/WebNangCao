@@ -15,7 +15,6 @@ export class ActorEntity {
 
   @Column()
   last_name: string;
-  
   @CreateDateColumn()
   last_update: Date;
 }

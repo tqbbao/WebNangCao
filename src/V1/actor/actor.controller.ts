@@ -14,20 +14,20 @@ import { CreateActorDto } from './dto/create-actor.dto';
 import { UpdateActorDto } from './dto/update-actor.dto';
 import { FilterActorDto } from './dto/filter-actor.dto';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
+
 @ApiTags('Actor')
 @Controller('actor')
 export class ActorController {
   constructor(private readonly actorService: ActorService) {}
-
-  // * GET
   @Get(':id')
   findById(@Param('id') actor_id: number): Promise<ActorEntity> {
     console.log('findById API');
     return this.actorService.findById(actor_id);
   }
 
-  @ApiQuery({name:'page'})
-  @ApiQuery({name: 'items_per_page'})
+  @ApiQuery({ name: 'page', allowEmptyValue: true })
+  @ApiQuery({ name: 'items_per_page', allowEmptyValue: true })
+  @ApiQuery({ name: 'keyword', allowEmptyValue: true })
   @Get()
   findAll(@Query() query: FilterActorDto): Promise<ActorEntity[]> {
     console.log('findAll API');

@@ -14,10 +14,15 @@ export class ActorService {
   ) {}
 
   async findAll(query: FilterActorDto): Promise<any> {
-    const items_per_page = Number(query.items_per_page);
+    const items_per_page = Number(query.items_per_page) || 20;
+    const keyword = query.keyword || '';
     const page = Number(query.page) || 1;
     const skip = (page - 1) * items_per_page;
     const [res, total] = await this.actorRepository.findAndCount({
+      where: [
+        { first_name: Like('%' + keyword + '%') },
+        { last_name: Like('%' + keyword + '%') },
+      ],
       order: { last_update: 'DESC' },
       take: items_per_page,
       skip: skip,
