@@ -23,9 +23,14 @@ export class ActorService {
         { first_name: Like('%' + keyword + '%') },
         { last_name: Like('%' + keyword + '%') },
       ],
-      order: { last_update: 'DESC' },
       take: items_per_page,
       skip: skip,
+      order: {
+        last_name: 'ASC',
+        last_update: 'DESC',
+        actor_id: 'DESC',
+        first_name: 'DESC',
+      },
       select: ['actor_id', 'first_name', 'last_name', 'last_update'],
     });
 
@@ -49,7 +54,6 @@ export class ActorService {
     });
     return foundActor;
   }
-
   async create(createActorDto: CreateActorDto): Promise<ActorEntity> {
     return await this.actorRepository.save(createActorDto);
   }
